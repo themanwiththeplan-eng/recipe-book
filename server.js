@@ -13,20 +13,41 @@ const session = require('express-session')
 //load config
 dotenv.config({ path: './config/config.env'})
 
+//passport config (place under load config)
+require('./config/passport')(passport)
 //Initialze app
 const app = express()
 
-//passport config (place under load config)
-require('./config/passport')(passport)
-
-
-//Sessions (place above passport middleware)
+//Sessions 
 app.use(session({ 
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
   }))
 
-  //passport middleware (place under handlebars)
+//express handlebars
+app.engine('.hbs', exphbs.engine ({ defaultLayout: 'main', extname: '.hbs',}))
+app.set('view engine', '.hbs')
+
+//passport middleware 
 app.use(passport.initialize())
 app.use(passport.session)
+
+//logging 
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
+
+// Static folder
+app.use(express.static(path.join(__dirname, 'public')))
+
+//routes
+app.use('/', require('./routes/index'))
+
+
+
+
+const PORT = process.env.PORT || 3001
+ 
+app.listen(PORT, 
+    console.log(`Server is running in ${process.env.NODE_ENV} mode on ${PORT}`))
