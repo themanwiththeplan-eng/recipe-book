@@ -11,7 +11,7 @@ const session = require('express-session')
 
 
 //load config
-dotenv.config({ path: './config/config.env'})
+dotenv.config({ path: './.env'})
 
 //passport config (place under load config)
 require('./config/passport')(passport)
