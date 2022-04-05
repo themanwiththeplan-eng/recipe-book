@@ -13,7 +13,7 @@ PRIMARY KEY (id)
 );
 
 CREATE TABLE users(
-id INTEGER NOT NULL AUTO_INCREMENT,
-username VARCHAR(30),
+id INTEGER NOT NULL,
+displayName VARCHAR(30),
 FOREIGN KEY(dishes_id) REFERENCES users(id)
 );
