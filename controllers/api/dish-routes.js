@@ -2,6 +2,7 @@ const router = require('express').Router();
 const res = require('express/lib/response');
 const { Dish, User } = require('../../models');
 
+
 router.get('/', (req, res) => {
     try{
         const recipeData = await Dish.findAll({
@@ -26,6 +27,7 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
     }
 })
+
 
 router.get('/:id', (req, res) => {
     try {
