@@ -42,7 +42,9 @@ app.set('view engine', '.hbs')
 
 //passport middleware 
 app.use(passport.initialize())
-app.use(passport.session())
+
+app.use(passport.session());
+
 
 //logging 
 if (process.env.NODE_ENV === 'development') {
