@@ -2,7 +2,8 @@ const router = require('express').Router();
 const res = require('express/lib/response');
 const { Dish, User } = require('../../models');
 
-router.get('/dishes', (req, res) => {
+
+router.get('/', (req, res) => {
     try{
         const recipeData = await Dish.findAll({
             include: [
@@ -27,7 +28,8 @@ router.get('/dishes', (req, res) => {
     }
 })
 
-router.get('/dishes/:id', (req, res) => {
+
+router.get('/:id', (req, res) => {
     try {
         const dbRecipeData = await Dish.findByPk(req.params.id, {
             include: [
