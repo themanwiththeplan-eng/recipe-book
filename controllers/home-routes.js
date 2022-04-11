@@ -20,6 +20,7 @@ router.get('/login', (req, res) => {
   }
   
 })
+
 router.get('/register', (req, res) => {
     if (!req.session.loggedIn) {
         res.render('register')
