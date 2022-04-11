@@ -9,7 +9,8 @@ Dish.init(
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 primaryKey: true,
-                autoIncrement: true
+                autoIncrement: true,
+                
             },
 
             dishName: {
@@ -34,7 +35,7 @@ Dish.init(
             sequelize,
             freezeTableName: true,
             underscored: true,
-            modelName: 'dish'
+            modelName: 'dishes'
         }
     
 )
