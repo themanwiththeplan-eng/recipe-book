@@ -2,6 +2,7 @@ const router = require('express').router
 const { render } = require('express/lib/response')
 const { User } = require('../../models')
 
+//Post login
 render.post('/', async (req, res) => {
     try {
         const dbUserData = await User.create({
@@ -55,5 +56,43 @@ router.post('/logout', (req, res) => {
         res.status(404).end();
     }
 })
+
+
+//Post register
+
+router.post('/', (req, res) => {
+    
+    User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password
+    })
+      .then(dbUserData => {
+        req.session.save(() => {
+          req.session.user_id = dbUserData.id;
+          req.session.username = dbUserData.username;
+          req.session.loggedIn = true;
+    
+          res.json(dbUserData);
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

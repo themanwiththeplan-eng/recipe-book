@@ -8,15 +8,11 @@ const session = require('express-session')
 const Router = require('./routes/index')
 const sequelize = require('sequelize')
 
-
-
-
 //load config
-dotenv.config({ path: './.env'})
+dotenv.config({ path: './.env' })
 
-//passport config 
+//passport config
 require('./config/passport')(passport)
-
 
 //Initialze app
 const app = express()
@@ -26,35 +22,36 @@ const app = express()
 app.use(express.json())
 
 //Sessions and store account in MongoDB avoid kicked out
-app.use(session({ 
+app.use(
+  session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    
-  }))
+  })
+)
 
 //express handlebars
-app.engine('.hbs', exphbs.engine ({ defaultLayout: 'main', extname: '.hbs',}))
+app.engine('.hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', '.hbs')
 
-//passport middleware 
+//routes
+app.use('/', Router)
 
-app.use('/', Router);
-
-
+//passport middleware
 app.use(passport.initialize())
 app.use(passport.session())
-//logging 
+
+//logging
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
+  app.use(morgan('dev'))
 }
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')))
 
-
-
 const PORT = process.env.PORT || 3001
- 
-app.listen(PORT, 
-    console.log(`Server is running in ${process.env.NODE_ENV} mode on ${PORT}`))
+
+app.listen(
+  PORT,
+  console.log(`Server is running in ${process.env.NODE_ENV} mode on ${PORT}`)
+)
