@@ -9,6 +9,7 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const passport = require('passport')
 const session = require('express-session')
+const Router = require('./routes/index')
 
 
 
@@ -19,13 +20,12 @@ dotenv.config({ path: './.env'})
 //passport config 
 require('./config/passport')(passport)
 
-connectDB()
 
 //Initialze app
 const app = express()
 
 // Body parser
-app.use(express.urlencoded({ extended: false }))
+// app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 //Sessions and store account in MongoDB avoid kicked out
@@ -33,7 +33,7 @@ app.use(session({
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({mongoUrl: process.env.MONGO_URI,})
+    
   }))
 
 //express handlebars
@@ -41,11 +41,12 @@ app.engine('.hbs', exphbs.engine ({ defaultLayout: 'main', extname: '.hbs',}))
 app.set('view engine', '.hbs')
 
 //passport middleware 
+
+app.use('/', Router);
+
+
 app.use(passport.initialize())
-
-app.use(passport.session());
-
-
+app.use(passport.session())
 //logging 
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
@@ -53,10 +54,6 @@ if (process.env.NODE_ENV === 'development') {
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')))
-
-//routes
-app.use('/', require('./routes/index'))
-app.use('/auth', require('./routes/auth')) 
 
 
 

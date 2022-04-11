@@ -1,17 +1,19 @@
 const express = require('express')
-const { ensureAuth, ensureGuest } = require('../middleware/auth')
 const router = express.Router()
 
 // GET landing page
-router.get('/', ensureGuest, (req, res) => {
-    res.render('login', {
-        layout: 'login'
-    })
-})
+router.get('/', (req, res) => {
+    res.render('landing')
+  })
 
 //GET dashboard
-router.get('/dashboard', ensureAuth, (req, res) => {
+router.get('/dashboard', (req, res, next) => {
     res.render('dashboard')
-})
+  })
+  
+  //Post login
+  router.post('/login', (req, res, next) => {
+    res.json(req.body)
+  })
 module.exports = router
 
