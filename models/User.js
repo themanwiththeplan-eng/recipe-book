@@ -54,7 +54,5 @@ User.init(
     }
 )
 
-User.hasMany(dishes);
-
 
 module.exports = User;
