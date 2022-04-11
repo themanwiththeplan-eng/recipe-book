@@ -4,12 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-
-    
     "start": "cross-env NODE_ENV=production node server",
     "dev": "cross-env NODE_ENV=development nodemon server"
-
-
   },
   "repository": {
     "type": "git",
@@ -23,6 +19,7 @@
   },
   "homepage": "https://github.com/themanwiththeplan-eng/recipe-book#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
