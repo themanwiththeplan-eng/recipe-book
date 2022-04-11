@@ -20,3 +20,4 @@ dishes_fk INTEGER,
 FOREIGN KEY (dishes_fk) REFERENCES dishes(id),
 primary key (id)
 );
+
