@@ -1,15 +1,12 @@
 const path = require('path')
 const express = require('express')
-const mongoose = require('mongoose')
-const connectDB = require('./config/db')
-const MongoStore = require('connect-mongo')
 const dotenv = require('dotenv')
-const morgan = require('morgan')
 const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const passport = require('passport')
 const session = require('express-session')
 const Router = require('./routes/index')
+const sequelize = require('sequelize')
 
 
 

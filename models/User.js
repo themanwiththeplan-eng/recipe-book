@@ -51,5 +51,5 @@ User.init(
 
 User.hasMany(dishes);
 
-module.exports = mongoose.model('User', UserSchema)
+
 module.exports = User;
