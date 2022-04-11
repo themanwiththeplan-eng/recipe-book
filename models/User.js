@@ -1,29 +1,54 @@
 const mongoose = require('mongoose')
+const { Model, DataTypes } = require('sequelize')
+const bcrypt = require('bcrypt')
+const sequelize = require('../config/connection')
+const dishes = require('./Dish')
 
-const UserSchema = new mongoose.Schema({
-  googleId: {
-    type: String,
-    require: true,
-  },
-  displayName: {
-    type: String,
-    require: true,
-  },
-  firstName: {
-    type: String,
-    require: true,
-  },
-  lastName: {
-    type: String,
-    require: true,
-  },
-  image: {
-    type: String,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-})
+class User extends Model{
+    checkPassword(loginPw){
+        return bcrypt.compareSync(loginPw, this.password)
+    }
+}
 
-module.exports = mongoose.model('User', UserSchema)
+User.init(
+    {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+            references: {
+                model: 'dishes',
+                key: 'id'
+            }
+        },
+        username: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                len: [6],
+            },
+        },
+    },
+    {
+        hooks: {
+            beforeCreate(newUserData){
+                newUserData.password = bcrypt.hash(newUserData.password, 10)
+                return newUserData
+            },
+        },
+        sequelize,
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'users'
+    }
+)
+
+User.hasMany(dishes);
+
+module.exports = User;
