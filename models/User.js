@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 const sequelize = require('../config/connection')
 const dishes = require('./Dish')
 
+
+
 class User extends Model{
     checkPassword(loginPw){
         return bcrypt.compareSync(loginPw, this.password)
@@ -21,6 +23,13 @@ User.init(
                 model: 'dishes',
                 key: 'id'
             }
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            validate: {
+                isEmail: true
+            },
         },
         username: {
             type: DataTypes.STRING,

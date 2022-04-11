@@ -25,3 +25,4 @@ app.listen(8000, function () {
   console.log('Listening to Port 8000');
 });
 
+module.exports = router;

@@ -7,6 +7,7 @@ const passport = require('passport')
 const session = require('express-session')
 const Router = require('./routes/index')
 const sequelize = require('sequelize')
+const routes = require('./controllers')
 
 
 
@@ -39,7 +40,7 @@ app.set('view engine', '.hbs')
 
 //passport middleware 
 
-app.use('/', Router);
+
 
 
 app.use(passport.initialize())
@@ -50,9 +51,18 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Static folder
+app.use(express.json())
+app.unsubscribe(express.urlencoded({extended: true}))
 app.use(express.static(path.join(__dirname, 'public')))
 
+app.use(app.router);
+routes.initialize(app)
 
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => {
+   console.log('Now Listening')
+  })
+})
 
 const PORT = process.env.PORT || 3001
  

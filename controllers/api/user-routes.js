@@ -7,6 +7,7 @@ render.post('/', async (req, res) => {
         const dbUserData = await User.create({
             username: req.body.username,
             password: req.body.password,
+            email: req.body.email
         });
         req.session.save(() => {
             req.session.loggedIn = true;
@@ -23,7 +24,7 @@ router.post('/login', async (req, res) => {
     try{
         const dbUserData = await User.findOne({
             where: {
-                username: req.body.username,
+                email: req.body.email,
             },
         });
         if(!dbUserData){
