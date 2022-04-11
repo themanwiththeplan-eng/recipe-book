@@ -1,19 +1,47 @@
-<h3> <i class = "fas fa book-reader"></i>Welcome</h3>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/login.css" /> 
+<title>Welcome to the login</title>
+</head>
 
+<body>
+    <section class="container">
+        <div class="parent dark-overlay">
+            <div class="card">
+                <h5 class="card-title text-center m-3">LOGIN</h5>
+                <form class="" name="myform" action="/login" method="POST">
+                    <div class="card-body ">
 
-<div class="section">
-    
-    <img class="login-image" src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60" alt="login-image">
-    
-    <p class="lead">Share your recipes and search your favorite food recipes</p>
-</div>
+                        <label>Username</label>
+                        <div class="form-group ">
+                            <input type="text" class="form-control form-control-lg" id="password" name="username" required/>
+                        </div>
+                        <label>Password</label>
+                        <div class="form-group ">
+                            <input type="password" class="form-control form-control-lg" id="password" name="password" required/>
+                        </div>
+                        <div class="form-group text-center">
+                            <input type="submit" class="btn btn-lg btn-danger m-3" id="myBtn" value="submit" />
+                           
+                            <br>
+                            Don't have an account yet? <a href="/register" class="mt-5">Register</a> here.
+                           
+                        </div>
+                </form>
 
-<div class="divider"></div>
+            </div>
+        </div>
+    </section>
+</body>
 
-<div class="section">
-    <a href="/auth/google" class="btn red darken-1">
-    <i class="fab fa-google left"></i>
-                 Log In
-    </a>
-</div>
+</html>

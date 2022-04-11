@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+        crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/register.css" />
+    <title>Register</title>
+</head>
+
+<body>
+    <section class="container">
+        <div class="parent dark-overlay">
+            <div class="card">
+                <h5 class="card-title text-center m-3">REGISTER</h5>
+                <form class="needs-validation" name="myform" action="/register" method="POST">
+                    <div class="card-body">
+                           <label for="validationCustom01 inputUsername">Username</label>
+                        <div class="form-group ">
+                            <input type="text" class="form-control form-control-lg" id="validationCustom01 inputUsername" name="username" placeholder="Enter username" required>
+                        </div>
+                        <label for="validationCustom02 inputEmail">Email</label>
+                        <div class="form-group ">
+                            <input type="email" class="form-control form-control-lg" id="validationCustom02 inputEmail" name="email" placeholder="Enter email" required>
+                        </div>
+                       <label for=" validationCustom03 inputPassword">Password</label>
+                        <div class="form-group ">
+                             <input type="password" class="form-control form-control-lg" id=" validationCustom03 password" name="password" placeholder="Enter password" required />
+                        </div>
+                        <br>
+                           <input type="submit" class="btn btn-danger btn-block text-center" value="register"/>               
+                            <br>
+                            Already have an account? <a href="/login" class="">Login</a> here.
+                       
+                </form>
+
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
