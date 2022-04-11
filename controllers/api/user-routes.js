@@ -4,10 +4,11 @@ const { render } = require('express/lib/response')
 const { User } = require('../../models')
 
 //Post login
-render.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   try {
     const dbUserData = await User.create({
       username: req.body.username,
+      email: req.body.email,
       password: req.body.password,
     })
     req.session.save(() => {
@@ -57,11 +58,13 @@ router.post('/login', async (req, res) => {
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
+    
       res.status(204).end()
     })
   } else {
     res.status(404).end()
   }
+  res.render('register')
 })
 
 //Post register

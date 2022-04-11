@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-const userRoutes = './user-routes'
+const userRoutes = require('./user-routes')
 const dishRoutes = require('./dish-routes')
 
 router.use('/dishes', dishRoutes)

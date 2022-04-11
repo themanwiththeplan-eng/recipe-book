@@ -5,6 +5,7 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const sequelize = require('./config/connection')
+const routes = require('./controllers')
 
 
 //load config
@@ -37,12 +38,11 @@ app.engine('.hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', '.hbs')
 
 //routes
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(require('./controllers/'))
-
-//passport middleware
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(routes)
 
 //logging
 if (process.env.NODE_ENV === 'development') {
