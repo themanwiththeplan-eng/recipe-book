@@ -15,5 +15,8 @@ PRIMARY KEY (id)
 CREATE TABLE users(
 id INTEGER NOT NULL AUTO_INCREMENT,
 username VARCHAR(30),
-FOREIGN KEY(dishes_id) REFERENCES users(id)
+password VARCHAR(30),
+dishes_fk INTEGER,
+FOREIGN KEY (dishes_fk) REFERENCES dishes(id),
+primary key (id)
 );
