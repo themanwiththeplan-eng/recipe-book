@@ -5,12 +5,13 @@ const { User } = require('../../models')
 
 //Post login
 router.post('/register', async (req, res) => {
+    console.log(req.body);
   try {
-    const dbUserData = await User.create({
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password,
-    })
+    const dbUserData = await User.create(JSON.stringify({
+      username: "Dakota",
+      email: "dakotadunn5@gmail.com",
+      password: "123456",
+    }))
     req.session.save(() => {
       req.session.loggedIn = true
 
