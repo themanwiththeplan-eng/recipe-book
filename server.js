@@ -44,10 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(routes)
 
-//logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'))
-}
+
 
 
 const PORT = process.env.PORT || 3001

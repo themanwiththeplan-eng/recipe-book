@@ -1,3 +1,5 @@
+const router = require("../controllers")
+
 const withAuth = (req, res, next) => {
   if (!req.session.loggedIn) {
     res.redirect('/login')
@@ -5,4 +7,6 @@ const withAuth = (req, res, next) => {
     next()
   }
 }
+
+
 module.exports = withAuth

@@ -5,16 +5,19 @@ const { User } = require('../../models')
 
 //Post login
 router.post('/register', async (req, res) => {
+    console.log(req.body);
   try {
     const dbUserData = await User.create({
       username: req.body.username,
       email: req.body.email,
       password: req.body.password,
-    })
-    req.session.save(() => {
-      req.session.loggedIn = true
+    }).then(data => {
+      req.session.save(() => {
+        req.session.loggedIn = true
 
-      res.status(200).json(dbUserData)
+        res.status(200).json(dbUserData)
+      }
+    )
     })
   } catch (err) {
     console.log(err)
