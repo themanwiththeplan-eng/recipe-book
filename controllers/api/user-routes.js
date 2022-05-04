@@ -7,15 +7,17 @@ const { User } = require('../../models')
 router.post('/register', async (req, res) => {
     console.log(req.body);
   try {
-    const dbUserData = await User.create(JSON.stringify({
-      username: "Dakota",
-      email: "dakotadunn5@gmail.com",
-      password: "123456",
-    }))
-    req.session.save(() => {
-      req.session.loggedIn = true
+    const dbUserData = await User.create({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+    }).then(data => {
+      req.session.save(() => {
+        req.session.loggedIn = true
 
-      res.status(200).json(dbUserData)
+        res.status(200).json(dbUserData)
+      }
+    )
     })
   } catch (err) {
     console.log(err)
