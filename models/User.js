@@ -4,45 +4,54 @@ const bcrypt = require('bcrypt')
 const sequelize = require('../config/connection')
 const dishes = require('./Dish')
 
-class User extends Model{
-}
-
-User.init(
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            references: {
-                model: 'dishes',
-                key: 'id'
-            }
-        },
-        username: {
-            type: DataTypes.STRING,
-            
-        },
-        email: {
-            type: DataTypes.STRING,
-            unique: true
-        },
-        password: {
-            type: DataTypes.STRING,
-            validate: {
-                len: [6],
-            },
-        },
-    },
-    
-    {
-        
-        sequelize,
-        timestamps: false,
-        freezeTableName: true,
-        underscored: true,
-        modelName: 'users'
+class User extends Model {
+    checkPassword(loginPW) {
+      return bcrypt.compareSync(loginPW, this.password)
     }
-)
-
-
-module.exports = User;
+  }
+  
+  User.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: [4],
+        },
+      },
+    },
+    {
+      hooks: {
+        async beforeCreate(newUserData) {
+          newUserData.password = await bcrypt.hash(newUserData.password, 10)
+          return newUserData
+        },
+        async beforeUpdate(updatedUserData) {
+          updatedUserData.password = await bcrypt.hash(
+            updatedUserData.password,
+            10
+          )
+          return updatedUserData
+        },
+      },
+  
+      sequelize,
+      timestamps: false,
+      freezeTableName: true,
+      underscored: true,
+      modelName: 'user',
+    }
+  )
+  
+  module.exports = User

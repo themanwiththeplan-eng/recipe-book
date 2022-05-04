@@ -1,3 +1,5 @@
-{{#each dishes as |dish|}}
-{{> dish-details}}
-{{/each}}
+<article class="dish">
+  {{#each dishes as |dish|}}
+     {{> dish-info dish }}
+  {{/each}}
+</article>

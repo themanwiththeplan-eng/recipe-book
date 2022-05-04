@@ -1,21 +1,27 @@
+const router = require('express').Router()
 const sequelize = require('../config/connection')
 const { Dish, User } = require('../models')
-const router = require('express').Router()
+const withAuth = require('../utils/auth')
 
-router.get('/', (req, res) => {
-  Dish.findAll({
+router.get('/', withAuth, (req, res) => {
+  Post.findAll({
+    where: {
+      // use the ID from the session
+      user_id: req.session.user_id,
+    },
     attributes: ['id', 'dishName', 'recipe', 'created_at'],
     include: [
       
       {
         model: User,
         attributes: ['username'],
-      },
+      }
     ],
   })
     .then((dbPostData) => {
-      const dishes = dbPostData.map((dish) => dish.get({ plain: true }))
-      res.render('homepage', { dishes, loggedIn: req.session.loggedIn })
+      // serialize data before passing to template
+      const posts = dbPostData.map((post) => post.get({ plain: true }))
+      res.render('dashboard', { posts, loggedIn: true })
     })
     .catch((err) => {
       console.log(err)
@@ -23,30 +29,18 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/login', (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect('/')
-    return
-  }
-  res.render('login')
-})
-
-router.get('/register', (req, res) => {
-  res.render('register')
-})
-
-router.get('/dish/:id', (req, res) => {
-  Dish.findOne({
+router.get('/edit/:id', withAuth, (req, res) => {
+  Post.findOne({
     where: {
       id: req.params.id,
     },
     attributes: ['id', 'dishName', 'recipe', 'created_at'],
     include: [
-     
       {
         model: User,
         attributes: ['username'],
       },
+     
     ],
   })
     .then((dbPostData) => {
@@ -54,11 +48,8 @@ router.get('/dish/:id', (req, res) => {
         res.status(404).json({ message: 'No dish found with this id' })
         return
       }
-
-      const dish = dbPostData.get({ plain: true })
-
-      console.log(dish)
-      res.render('single-dish', { dish, loggedIn: req.session.loggedIn })
+      const post = dbPostData.get({ plain: true })
+      res.render('edit-dish', { post, loggedIn: true })
     })
     .catch((err) => {
       console.log(err)
@@ -66,6 +57,8 @@ router.get('/dish/:id', (req, res) => {
     })
 })
 
-
+router.get('/new', (req, res) => {
+  res.render('new-dish')
+})
 
 module.exports = router
