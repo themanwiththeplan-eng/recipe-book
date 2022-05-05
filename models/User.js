@@ -1,8 +1,8 @@
 
 const { Model, DataTypes } = require('sequelize')
-const bcrypt = require('bcrypt')
+
 const sequelize = require('../config/connection')
-const dishes = require('./Dish')
+
 
 class User extends Model{
 }
@@ -13,10 +13,6 @@ User.init(
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            references: {
-                model: 'dishes',
-                key: 'id'
-            }
         },
         username: {
             type: DataTypes.STRING,
