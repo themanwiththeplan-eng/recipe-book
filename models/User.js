@@ -1,55 +1,56 @@
-const mongoose = require('mongoose')
 const { Model, DataTypes } = require('sequelize')
-const bcrypt = require('bcrypt')
-const sequelize = require('../config/connection')
-const dishes = require('./Dish')
 
-class User extends Model{
-    checkPassword(loginPw){
-        return bcrypt.compareSync(loginPw, this.password)
-    }
+const sequelize = require('../config/connection')
+
+
+class User extends Model {
+  checkPassword(loginPW) {
+    return bcrypt.compareSync(loginPW, this.password)
+  }
 }
 
 User.init(
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true,
-            autoIncrement: true,
-            references: {
-                model: 'dishes',
-                key: 'id'
-            }
-        },
-        username: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            validate: {
-                len: [6],
-            },
-        },
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-    {
-        hooks: {
-            beforeCreate(newUserData){
-                newUserData.password = bcrypt.hash(newUserData.password, 10)
-                return newUserData
-            },
-        },
-        sequelize,
-        timestamps: false,
-        freezeTableName: true,
-        underscored: true,
-        modelName: 'users'
-    }
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [4],
+      },
+    },
+  },
+  {
+    hooks: {
+      async beforeCreate(newUserData) {
+        newUserData.password = await bcrypt.hash(newUserData.password, 10)
+        return newUserData
+      },
+      async beforeUpdate(updatedUserData) {
+        updatedUserData.password = await bcrypt.hash(
+          updatedUserData.password,
+          10
+        )
+        return updatedUserData
+      },
+    },
+
+    sequelize,
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'user',
+  }
 )
 
-User.hasMany(dishes);
-
-
-module.exports = User;
+module.exports = User

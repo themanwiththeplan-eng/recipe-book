@@ -1,0 +1,26 @@
+<div class='card'>
+  <h3 class='card-header'>Edit Dish</h3>
+  <form class='card-body edit-post-form'>
+    <label for='dish-name' class='form-label'>Dish Name</label>
+    <input
+      name='dish-name'
+      type='text'
+      value='{{dish.dishName}}'
+      class='form-input'
+    />
+
+    <label class='form-label' for='recipe'>Recipe</label>
+    <input
+      name='recipe'
+      type='text'
+      value='{{dish.dishName}}'
+      class='form-input'
+    />
+
+    <button type='submit' class='btn'>Update Dish</button>
+    <button type='button' class='delete-post-btn btn'>Delete Dish</button>
+  </form>
+</div>
+
+<script src='/javascript/edit-dish.js'></script>
+<script src='/javascript/delete-dish.js'></script>

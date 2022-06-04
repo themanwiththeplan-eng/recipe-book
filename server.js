@@ -1,60 +1,42 @@
-const path = require('path')
 const express = require('express')
+const routes = require('./controllers')
+const sequelize = require('./config/connection')
+const path = require('path')
 const dotenv = require('dotenv')
 const exphbs = require('express-handlebars')
-const methodOverride = require('method-override')
-const passport = require('passport')
+const helpers = require('./utils/helpers')
+const hbs = exphbs.create({ helpers })
+
 const session = require('express-session')
-const Router = require('./routes/index')
-const sequelize = require('sequelize')
-
-
-
-
-//load config
-dotenv.config({ path: './.env'})
-
-//passport config 
-require('./config/passport')(passport)
-
-
-//Initialze app
 const app = express()
+const PORT = process.env.PORT || 3001
 
-// Body parser
-// app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
-//Sessions and store account in MongoDB avoid kicked out
-app.use(session({ 
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    
-  }))
-
-//express handlebars
-app.engine('.hbs', exphbs.engine ({ defaultLayout: 'main', extname: '.hbs',}))
-app.set('view engine', '.hbs')
-
-//passport middleware 
-
-app.use('/', Router);
-
-
-app.use(passport.initialize())
-app.use(passport.session())
-//logging 
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'))
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
 }
 
-// Static folder
+app.use(session(sess))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))
 
+//load config
+dotenv.config({ path: './.env' })
 
+//express handlebars
+app.engine('.hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', '.hbs')
 
-const PORT = process.env.PORT || 3001
- 
-app.listen(PORT, 
-    console.log(`Server is running in ${process.env.NODE_ENV} mode on ${PORT}`))
+app.use(routes)
+
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'))
+})
