@@ -7,9 +7,35 @@
     <label class='form-label' for='password-signup'>Password</label>
     <input id='password-signup' type='password' class='form-input' />
 
+
     <button type='submit' class='btn'>Register!</button>
     <a class='login-link' href='/login'>Log in instead</a>
   </form>
 </div>
+=======
+<body>
+    <section class="container">
+        <div class="parent dark-overlay">
+            <div class="card">
+                <h5 class="card-title text-center m-3">REGISTER</h5>
+                <form class="needs-validation" name="myform" action="api/users/register" method="POST">
+                    <div class="card-body">
+                           <label for="validationCustom01 inputUsername">Username</label>
+                        <div class="form-group ">
+                            <input type="text" class="form-control form-control-lg" id="inputUsername" name="username" placeholder="Enter username" required>
+                        </div>
+                        <label for="validationCustom02 inputEmail">Email</label>
+                        <div class="form-group ">
+                            <input type="email" class="form-control form-control-lg" id="inputEmail" name="email" placeholder="Enter email" required>
+                        </div>
+                       <label for=" validationCustom03 inputPassword">Password</label>
+                        <div class="form-group ">
+                             <input type="password" class="form-control form-control-lg" id="inputPassword" name="password" placeholder="Enter password" required />
+                        </div>
+                        <br>
+                           <input type="submit" class="btn btn-danger btn-block text-center" value="register" id="submitBtn"/>               
+                            <br>
+                            Already have an account? <a href="/login" class="">Login</a> here.
+
 
 <script src='/javascript/register.js'></script>
