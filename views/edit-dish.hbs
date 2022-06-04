@@ -1,19 +1,19 @@
 <div class='card'>
   <h3 class='card-header'>Edit Dish</h3>
   <form class='card-body edit-post-form'>
-    <label for='post-title' class='form-label'>Dish Name</label>
+    <label for='dish-name' class='form-label'>Dish Name</label>
     <input
-      name='post-title'
+      name='dish-name'
       type='text'
-      value='{{post.title}}'
+      value='{{dish.dishName}}'
       class='form-input'
     />
 
-    <label class='form-label' for='content'>Recipe</label>
+    <label class='form-label' for='recipe'>Recipe</label>
     <input
-      name='content'
+      name='recipe'
       type='text'
-      value='{{post.content}}'
+      value='{{dish.dishName}}'
       class='form-input'
     />
 
@@ -22,5 +22,5 @@
   </form>
 </div>
 
-<script src='/javascript/edit-post.js'></script>
-<script src='/javascript/delete-post.js'></script>
+<script src='/javascript/edit-dish.js'></script>
+<script src='/javascript/delete-dish.js'></script>

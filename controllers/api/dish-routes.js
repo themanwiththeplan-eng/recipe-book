@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Dish, User} = require('../../models')
+const { Dish, User } = require('../../models')
 const sequelize = require('../../config/connection')
 const withAuth = require('../../utils/auth')
 
@@ -15,7 +15,6 @@ router.get('/', (req, res) => {
         model: User,
         attributes: ['username'],
       },
-      
     ],
   })
     .then((dbPostData) => res.json(dbPostData.reverse()))
@@ -37,7 +36,6 @@ router.get('/:id', (req, res) => {
         model: User,
         attributes: ['username'],
       },
-      
     ],
   })
     .then((dbPostData) => {
@@ -57,8 +55,8 @@ router.get('/:id', (req, res) => {
 router.post('/', withAuth, (req, res) => {
   // create 1 post
   Post.create({
-    title: req.body.dishName,
-    content: req.body.recipe,
+    dishname: req.body.dishName,
+    recipe: req.body.recipe,
     user_id: req.session.user_id,
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -68,12 +66,12 @@ router.post('/', withAuth, (req, res) => {
     })
 })
 
-// update a dish 
+// update a dish
 router.put('/:id', withAuth, (req, res) => {
   Post.update(
     {
-      title: req.body.dishName,
-      content: req.body.recipe,
+      dishname: req.body.dishName,
+      recipe: req.body.recipe,
     },
     {
       where: {

@@ -1,7 +1,6 @@
 const seedUsers = require('./user-seeds')
 const seedDishes = require('./dish-seeds')
 
-
 const sequelize = require('../config/connection')
 
 const seedAll = async () => {
@@ -9,12 +8,8 @@ const seedAll = async () => {
   console.log('------DATABASE SYNCED--------')
   await seedUsers()
   console.log('--------USERS SEEDED------')
-
-  await seedPosts()
-  console.log('-------POSTS SEEDED-------')
-
-  await seedComments()
-  console.log('-------COMMENTS SEEDED-------')
+  await seedDishes()
+  console.log('-------DISHES SEEDED-------')
 
   process.exit(0)
 }

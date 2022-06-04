@@ -6,7 +6,6 @@ router.get('/', (req, res) => {
   Dish.findAll({
     attributes: ['id', 'dishName', 'recipe', 'created_at'],
     include: [
-      
       {
         model: User,
         attributes: ['username'],
@@ -42,7 +41,6 @@ router.get('/dish/:id', (req, res) => {
     },
     attributes: ['id', 'dishName', 'recipe', 'created_at'],
     include: [
-     
       {
         model: User,
         attributes: ['username'],
@@ -55,7 +53,7 @@ router.get('/dish/:id', (req, res) => {
         return
       }
 
-      const dish = dbPostData.get({ plain: true })
+      const dish = dbDishData.get({ plain: true })
 
       console.log(dish)
       res.render('single-dish', { dish, loggedIn: req.session.loggedIn })
@@ -65,7 +63,5 @@ router.get('/dish/:id', (req, res) => {
       res.status(500).json(err)
     })
 })
-
-
 
 module.exports = router

@@ -4,40 +4,36 @@ const sequelize = require('../config/connection')
 class Dish extends Model {}
 
 Dish.init(
-      {
-            id: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                primaryKey: true,
-                autoIncrement: true,
-                
-            },
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
 
-            dishName: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            recipe: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            ingredients: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            country:{
-                type: DataTypes.STRING,
-                allowNull: false,
-            }
-        },
-
-        {
-            sequelize,
-            freezeTableName: true,
-            underscored: true,
-            modelName: 'dishes'
-        }
-    
+    dishName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    recipe: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'user',
+        key: 'id',
+      },
+    },
+  },
+  {
+    sequelize,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'dishes',
+  }
 )
 
-module.exports = Dish;
+module.exports = Dish

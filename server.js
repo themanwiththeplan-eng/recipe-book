@@ -1,24 +1,15 @@
-const path = require('path')
 const express = require('express')
+const routes = require('./controllers')
+const sequelize = require('./config/connection')
+const path = require('path')
 const dotenv = require('dotenv')
 const exphbs = require('express-handlebars')
-const methodOverride = require('method-override')
+const helpers = require('./utils/helpers')
+const hbs = exphbs.create({ helpers })
+
 const session = require('express-session')
-const sequelize = require('./config/connection')
-const routes = require('./controllers')
-
-
-//load config
-dotenv.config({ path: './.env' })
-
-//Initialze app
 const app = express()
-
-// Body parser
-// app.use(express.urlencoded({ extended: false }))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+const PORT = process.env.PORT || 3001
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
@@ -33,22 +24,19 @@ const sess = {
 }
 
 app.use(session(sess))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static(path.join(__dirname, 'public')))
+
+//load config
+dotenv.config({ path: './.env' })
+
 //express handlebars
 app.engine('.hbs', exphbs.engine({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', '.hbs')
 
-//routes
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
-app.use(express.static(path.join(__dirname, 'public')))
-
 app.use(routes)
 
-
-
-
-const PORT = process.env.PORT || 3001
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log('Now listening'))
 })
